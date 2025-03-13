@@ -16,6 +16,7 @@ import { HomePage } from './pages/HomePage';
 import InternInfoPage from './pages/InternInfoPage';
 import InterviewersPage from './pages/InterviewersPage';
 import InterviewPage from './pages/InterviewPage';
+import InterviewBuilderPage from './pages/InterviewBuilderPage';
 import LoginPage from './pages/LoginPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import ScheduleInterviewPage from './pages/ScheduleInterviewPage';
@@ -57,6 +58,10 @@ export const App = () => {
             <Route path={Path.Dashboard} component={DashboardPage} />
             <Route path={Path.Login} component={LoginPage} />
             <Route path={Path.Interviewers} component={InterviewersPage} />
+            <Route
+              path={Path.InterviewBuilder}
+              component={InterviewBuilderPage}
+            />
             <Route path={Path.AdminLogs} component={AdminLogsPage} />
             <Route path={Path.Counter} component={CounterPage} />
             <Route path={Path.CatchAll} component={NotFoundPage} />

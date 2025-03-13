@@ -28,6 +28,24 @@ model Interviewer {
   interviews  InterviewMemberParticipation[]
 }
 
+model InterviewQuestion {
+  id               String  @id @default(uuid())
+  question         String
+  type             QuestionType
+  category         QuestionCategory
+  minValue         Int?
+  maxValue         Int?
+  stepValue        Int?             @default(1)
+  QuestionOption   QuestionOption[]
+}
+
+model QuestionOption {
+  id                String            @id @default(uuid())
+  questionId        String
+  value             String
+  InterviewQuestion InterviewQuestion @relation(fields: [questionId], references: [id])
+}
+
 model Intern {
   id                String             @id @default(uuid())
   firstName         String
@@ -138,6 +156,28 @@ model AdminLog {
   action      AdminLogAction
   description String
   date        DateTime       @default(now())
+}
+
+enum QuestionCategory {
+  General
+  Personal
+  Final
+  Dev
+  Marketing
+  Design
+  Multimedia
+}
+
+enum QuestionType {
+  Checkbox
+  Radio
+  Slider
+  Field
+  Select
+  TextArea
+  Number
+  Date
+  DateTime
 }
 
 enum Discipline {
