@@ -9,11 +9,6 @@ export class EmailService {
 
   //private postmark = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
 
-  async sendEmail(emails: string[], text: string, subject: string) {
-    console.log(`ovo je simulacija slanja emaila na: ${emails.join(', ')}`);
-    return Promise.resolve();
-  }
-
   // async sendEmail(emails: string[], text: string, subject: string) {
   //   const interns = await this.prisma.intern.findMany({
   //     where: { email: { in: emails } },

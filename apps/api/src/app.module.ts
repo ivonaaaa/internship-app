@@ -10,6 +10,7 @@ import { EmailModule } from './email/email.module';
 import { InternModule } from './intern/intern.module';
 import { InterviewSlotModule } from './interview-slot/interview-slot.module';
 import { InterviewerModule } from './interviewer/interviewer.module';
+import { QuestionModule } from './interview-question/question.module';
 import { LoggerModule } from './logger/logger.module';
 import { PrismaService } from './prisma.service';
 import { TestSlotModule } from './test-slot/test-slot.module';
@@ -26,6 +27,7 @@ import { TestSlotModule } from './test-slot/test-slot.module';
     AuthModule,
     InterviewSlotModule,
     InterviewerModule,
+    QuestionModule,
     TestSlotModule,
     InterviewerModule,
   ],
