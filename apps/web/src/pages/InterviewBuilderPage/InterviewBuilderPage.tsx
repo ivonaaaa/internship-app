@@ -17,8 +17,7 @@ const InterviewBuilderPage = () => {
         Save Changes
       </Button>
       <div>
-        {/* ovo moram popraviz jos jer sam prominila fetcheve */}
-        {questions?.data?.map((question: any) => (
+        {questions?.map((question: any) => (
           <QuestionCard key={question.id} question={question} />
         ))}
       </div>

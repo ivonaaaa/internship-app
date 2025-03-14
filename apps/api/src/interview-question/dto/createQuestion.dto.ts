@@ -1,44 +1,21 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { QuestionType, QuestionCategory } from '@prisma/client';
-import {
-  IsString,
-  IsEnum,
-  IsOptional,
-  IsNumber,
-  IsArray,
-} from 'class-validator';
+import { IsString, IsEnum, IsOptional, IsArray } from 'class-validator';
+
+export enum QuestionType {
+  OPEN = 'OPEN',
+  MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
+}
 
 export class CreateQuestionDto {
   @IsString()
-  @ApiProperty()
-  question: string;
+  question!: string;
 
   @IsEnum(QuestionType)
-  @ApiProperty({ enum: QuestionType })
-  type: QuestionType;
+  type!: QuestionType;
 
-  @IsEnum(QuestionCategory)
-  @ApiProperty({ enum: QuestionCategory })
-  category: QuestionCategory;
-
-  @IsOptional()
-  @IsNumber()
-  @ApiProperty({ required: false })
-  minValue?: number;
-
-  @IsOptional()
-  @IsNumber()
-  @ApiProperty({ required: false })
-  maxValue?: number;
-
-  @IsOptional()
-  @IsNumber()
-  @ApiProperty({ required: false, default: 1 })
-  stepValue?: number;
+  @IsString()
+  category!: string;
 
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })
-  @ApiProperty({ required: false, type: [String] })
   options?: string[];
 }

@@ -2,11 +2,61 @@ import { Injectable } from '@nestjs/common';
 import { BadRequestException } from '@nestjs/common/exceptions';
 import { PrismaService } from 'src/prisma.service';
 
-import { CreateQuestionDto } from './dto/createQuestion.dto';
+import { CreateQuestionDto, QuestionType } from './dto/createQuestion.dto';
+
+enum QuestionCategory {
+  General = 'General',
+  Personal = 'Personal',
+  Final = 'Final',
+  Dev = 'Dev',
+  Marketing = 'Marketing',
+  Design = 'Design',
+  Multimedia = 'Multimedia',
+}
+
+enum DbQuestionType {
+  Checkbox = 'Checkbox',
+  Radio = 'Radio',
+  Slider = 'Slider',
+  Field = 'Field',
+  Select = 'Select',
+  TextArea = 'TextArea',
+  Number = 'Number',
+  Date = 'Date',
+  DateTime = 'DateTime',
+}
 
 @Injectable()
 export class QuestionService {
   constructor(private readonly prisma: PrismaService) {}
+
+  private mapDtoTypeToDbType(dtoType: QuestionType): DbQuestionType {
+    switch (dtoType) {
+      case QuestionType.OPEN:
+        return DbQuestionType.TextArea;
+      case QuestionType.MULTIPLE_CHOICE:
+        return DbQuestionType.Checkbox;
+      default:
+        throw new BadRequestException('Unsupported question type');
+    }
+  }
+
+  private mapCategoryToDbCategory(category: string): QuestionCategory {
+    try {
+      const dbCategory = category as QuestionCategory;
+
+      if (!Object.values(QuestionCategory).includes(dbCategory))
+        throw new Error();
+
+      return dbCategory;
+    } catch (error) {
+      throw new BadRequestException(
+        `Invalid category: ${category}. Valid categories are: ${Object.values(
+          QuestionCategory,
+        ).join(', ')}`,
+      );
+    }
+  }
 
   async getAll() {
     const questions = await this.prisma.interviewQuestion.findMany({
@@ -39,7 +89,9 @@ export class QuestionService {
 
     const newQuestion = await this.prisma.interviewQuestion.create({
       data: {
-        ...questionData,
+        question: questionData.question,
+        type: this.mapDtoTypeToDbType(questionData.type),
+        category: this.mapCategoryToDbCategory(questionData.category),
         QuestionOption: options
           ? {
               createMany: {
