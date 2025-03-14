@@ -7,5 +7,6 @@ services:
     environment:
       POSTGRES_USER: dumpovac
       POSTGRES_PASSWORD: dump123
+      POSTGRES_DB: internship_db
     ports:
       - 3001:5432

@@ -10,6 +10,18 @@ export enum QuestionCategory {
   Final = 'Final',
 }
 
+export enum QuestionType {
+  Checkbox = 'Checkbox',
+  Radio = 'Radio',
+  Slider = 'Slider',
+  Field = 'Field',
+  Select = 'Select',
+  TextArea = 'TextArea',
+  Number = 'Number',
+  Date = 'Date',
+  DateTime = 'DateTime',
+}
+
 export const steps = [
   { label: 'Općenito', category: QuestionCategory.General },
   { label: 'Osobno', category: QuestionCategory.Personal },

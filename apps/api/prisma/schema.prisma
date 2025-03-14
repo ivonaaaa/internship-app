@@ -162,7 +162,7 @@ enum QuestionCategory {
   General
   Personal
   Final
-  Dev
+  Development
   Marketing
   Design
   Multimedia
