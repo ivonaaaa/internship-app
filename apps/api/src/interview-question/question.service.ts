@@ -58,6 +58,34 @@ export class QuestionService {
     }
   }
 
+  private mapDtoTypeToDbType(dtoType: QuestionType): DbQuestionType {
+    switch (dtoType) {
+      case QuestionType.OPEN:
+        return DbQuestionType.TextArea;
+      case QuestionType.MULTIPLE_CHOICE:
+        return DbQuestionType.Checkbox;
+      default:
+        throw new BadRequestException('Unsupported question type');
+    }
+  }
+
+  private mapCategoryToDbCategory(category: string): QuestionCategory {
+    try {
+      const dbCategory = category as QuestionCategory;
+
+      if (!Object.values(QuestionCategory).includes(dbCategory))
+        throw new Error();
+
+      return dbCategory;
+    } catch (error) {
+      throw new BadRequestException(
+        `Invalid category: ${category}. Valid categories are: ${Object.values(
+          QuestionCategory,
+        ).join(', ')}`,
+      );
+    }
+  }
+
   async getAll() {
     const questions = await this.prisma.interviewQuestion.findMany({
       include: {
@@ -89,6 +117,9 @@ export class QuestionService {
 
     const newQuestion = await this.prisma.interviewQuestion.create({
       data: {
+        question: questionData.question,
+        type: this.mapDtoTypeToDbType(questionData.type),
+        category: this.mapCategoryToDbCategory(questionData.category),
         question: questionData.question,
         type: this.mapDtoTypeToDbType(questionData.type),
         category: this.mapCategoryToDbCategory(questionData.category),
